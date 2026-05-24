@@ -45,10 +45,6 @@ A Stash plugin that lets you capture the current video frame while watching a sc
 - Python 3.x (only needed for the optional Test Connection task)
 - `stashapp-tools` Python package (optional — only for the task)
 
-```
-pip install stashapp-tools
-```
-
 ## License
 
 MIT
