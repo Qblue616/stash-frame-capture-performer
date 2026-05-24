@@ -29,7 +29,7 @@ A Stash plugin that lets you capture the current video frame while watching a sc
 
 1. Download or clone this repository
 2. Copy the `frameCapturePerformer` folder into your Stash plugins directory
-3. In Stash go to **Settings → Plugins** and click **Reload Plugins**
+3. In Stash go to **Settings → Plugins** and click **Reload Plugins** or fully close and restart StashDB
 
 ## Usage
 
