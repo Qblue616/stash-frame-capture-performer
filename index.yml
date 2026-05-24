@@ -1,0 +1,16 @@
+- id: frameCapturePerformer
+  name: Frame Capture Performer
+  metadata:
+    description: Capture the current video frame and set it as a performer's profile image. Supports single and multi-performer scenes.
+    tags:
+      - performer
+      - images
+  version: 0.1.0
+  date: 2026-05-24
+  path: frame-capture-performer
+  files:
+    - frame-capture-performer.yml
+    - frame-capture.js
+    - frame-capture.css
+    - frame-capture-performer.py
+    - README.md
