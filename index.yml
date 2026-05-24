@@ -5,7 +5,7 @@
     tags:
       - performer
       - images
-  version: 0.1.0
+  version: "0.1.0"
   date: "2026-05-24 00:00:00"
   path: frameCapturePerformer
   files:
