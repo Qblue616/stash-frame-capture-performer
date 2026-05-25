@@ -1,0 +1,19 @@
+name: Frame Capture Performer
+description: Capture the current video frame and set it as a performer's profile image. Supports single and multi-performer scenes.
+version: "0.1.0"
+ui:
+  javascript:
+    - frame-capture.js
+  css:
+    - frame-capture.css
+# Python is only needed for the "Test Connection" task.
+# Stash uses whatever Python path is configured in your Stash settings.
+exec:
+  - python
+  - "{pluginDir}/frame-capture-performer.py"
+interface: raw
+tasks:
+  - name: "Test Connection"
+    description: "Verify the plugin can communicate with your Stash instance"
+    defaultArgs:
+      mode: test
