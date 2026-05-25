@@ -1,9 +1,0 @@
-- id: frameCapturePerformer
-  name: Frame Capture Performer
-  metadata:
-    description: Capture the current video frame and set it as a performer's profile image. Supports single and multi-performer scenes.
-  version: 0.1.0
-  date: 2026-05-24 00:00:00
-  path: frameCapturePerformer.zip
-  sha256: 1e69f5c10041f39aeb6665e131aaa730ce5f95a38803f798465005e30083ba34
-  requires: []
