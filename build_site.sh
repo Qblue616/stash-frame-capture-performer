@@ -2,7 +2,6 @@
 # AGPLv3.0
 # https://github.com/stashapp/CommunityScripts/blob/main/LICENSE
 # builds a repository of plugins
-# zips each plugin inside a community/ folder so it extracts to plugins/community/<plugin_id>/
 
 outdir="$1"
 
@@ -27,16 +26,10 @@ buildPlugin()
 
   zipfile=$(realpath "$outdir/$plugin_id.zip")
 
-  # Wrap inside community/<plugin_id>/ so Stash extracts to plugins/community/<plugin_id>/
-  tmpdir=$(mktemp -d)
-  mkdir -p "$tmpdir/community/$plugin_id"
-  cp "$dir"/* "$tmpdir/community/$plugin_id/" 2>/dev/null || true
-
-  pushd "$tmpdir" > /dev/null
-  zip -r "$zipfile" community/ > /dev/null
+  # Zip files at root level — Stash creates the plugin folder on extraction
+  pushd "$dir" > /dev/null
+  zip -r "$zipfile" . > /dev/null
   popd > /dev/null
-
-  rm -rf "$tmpdir"
 
   name=$(grep "^name:" "$f" | head -n 1 | cut -d' ' -f2- | sed -e 's/\r//' -e 's/^"\(.*\)"$/\1/')
   description=$(grep "^description:" "$f" | head -n 1 | cut -d' ' -f2- | sed -e 's/\r//' -e 's/^"\(.*\)"$/\1/')
