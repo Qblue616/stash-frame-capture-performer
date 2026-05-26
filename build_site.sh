@@ -2,10 +2,7 @@
 # AGPLv3.0
 # https://github.com/stashapp/CommunityScripts/blob/main/LICENSE
 # builds a repository of plugins
-# outputs to _site with the following structure:
-# index.yml
-# <plugin_id>.zip
-# Each zip file contains the plugin.yml file and any other files in the same directory
+# zips each plugin inside a community/ folder so it extracts to plugins/community/<plugin_id>/
 
 outdir="$1"
 
@@ -20,22 +17,26 @@ buildPlugin()
 {
   f=$1
 
-  # get the plugin id from the directory
   dir=$(dirname "$f")
   plugin_id=$(basename "$f" .yml)
 
   echo "Processing $plugin_id"
 
-  # create a directory for the version
   version=$(git log -n 1 --pretty=format:%h -- "$dir"/*)
   updated=$(TZ=UTC0 git log -n 1 --date="format-local:%F %T" --pretty=format:%ad -- "$dir"/*)
 
-  # create the zip file
   zipfile=$(realpath "$outdir/$plugin_id.zip")
 
-  pushd "$dir" > /dev/null
-  zip -r "$zipfile" . > /dev/null
+  # Wrap inside community/<plugin_id>/ so Stash extracts to plugins/community/<plugin_id>/
+  tmpdir=$(mktemp -d)
+  mkdir -p "$tmpdir/community/$plugin_id"
+  cp "$dir"/* "$tmpdir/community/$plugin_id/" 2>/dev/null || true
+
+  pushd "$tmpdir" > /dev/null
+  zip -r "$zipfile" community/ > /dev/null
   popd > /dev/null
+
+  rm -rf "$tmpdir"
 
   name=$(grep "^name:" "$f" | head -n 1 | cut -d' ' -f2- | sed -e 's/\r//' -e 's/^"\(.*\)"$/\1/')
   description=$(grep "^description:" "$f" | head -n 1 | cut -d' ' -f2- | sed -e 's/\r//' -e 's/^"\(.*\)"$/\1/')
@@ -44,7 +45,6 @@ buildPlugin()
 
   dep=$(grep "^# requires:" "$f" | cut -c 12- | sed -e 's/\r//')
 
-  # write to spec index
   echo "- id: $plugin_id
   name: $name
   metadata:
@@ -54,7 +54,6 @@ buildPlugin()
   path: $plugin_id.zip
   sha256: $(sha256sum "$zipfile" | cut -d' ' -f1)" >> "$outdir"/index.yml
 
-  # handle dependencies
   if [ ! -z "$dep" ]; then
     echo "  requires:" >> "$outdir"/index.yml
     for d in ${dep//,/ }; do
@@ -65,6 +64,6 @@ buildPlugin()
   echo "" >> "$outdir"/index.yml
 }
 
-find ./plugins -mindepth 1 -name *.yml | while read file; do
+find ./plugins -mindepth 2 -name "*.yml" | while read file; do
   buildPlugin "$file"
 done
