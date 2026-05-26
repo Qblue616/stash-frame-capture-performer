@@ -19,7 +19,7 @@ A Stash plugin that lets you capture the current video frame while watching a sc
 3. Set the name to anything you like (e.g. `Qblue616`)
 4. Paste this as the Source URL:
    ```
-   https://raw.githubusercontent.com/Qblue616/stash-frame-capture-performer/main/index.yml
+   https://qblue616.github.io/stash-frame-capture-performer/main/index.yml
    ```
 5. Click **Confirm**
 6. Find **Frame Capture Performer** in the list and click **Install**
@@ -28,7 +28,7 @@ A Stash plugin that lets you capture the current video frame while watching a sc
 ### Option 2 — Manual installation
 
 1. Download or clone this repository
-2. Copy the `frameCapturePerformer` folder into your Stash plugins directory
+2. Copy the `frameCapturePerformer` folder into your Stash plugins/community directory
 3. In Stash go to **Settings → Plugins** and click **Reload Plugins** or fully close and restart StashDB
 
 ## Usage
